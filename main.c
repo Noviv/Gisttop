@@ -27,9 +27,9 @@ bool _dir_exist(const char* path) {
 	}
 	return false;
 #else
-	struct stat path_stat;
-	stat(path, &path_stat);
-	return S_ISDIR(path_stat.st_mode);
+	struct stat status;
+	stat(path, &status);
+	return S_ISDIR(status.st_mode);
 #endif
 }
 
