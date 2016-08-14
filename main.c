@@ -19,15 +19,18 @@ typedef int bool;
 #define false 0
 
 bool _dir_exist(const char* path) {
+#ifdef _WIN32
+	if (_access(path, 0) == 0) {
+		struct stat status;
+		stat(path, &status);
+		return (status.st_mode & S_IFDIR) != 0;
+	}
+	return false;
+#else
 	struct stat path_stat;
 	stat(path, &path_stat);
 	return S_ISDIR(path_stat.st_mode);
-}
-
-bool _file_exist(const char* path) {
-	struct stat path_stat;
-	stat(path, &path_stat);
-	return S_ISREG(path_stat.st_mode);
+#endif
 }
 
 int main(int argc, char* argv[]) {
