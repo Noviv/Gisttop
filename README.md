@@ -5,7 +5,7 @@ desktop application that sends notifications when git repos are updated
 # X-platform Building
 ## Windows
 ~~~~
-cl /I.../libgit2/include /LIBPATH:.../build /Femain.exe main.c
+cl main.c /I.../libgit2/include /link .../libgit2/build/Debug/git2.lib /OUT:main.exe
 ~~~~
 ## Linux
 ~~~~
