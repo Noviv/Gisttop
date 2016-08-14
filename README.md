@@ -9,5 +9,5 @@ desktop application that sends notifications when git repos are updated
 ~~~~
 ## Linux
 ~~~~
-gcc -I/root/docs/git/libgit2/include main.c -L/root/docs/git/libgit2/build -lgit2 -o main
+gcc -I.../libgit2/include main.c -L.../libgit2/build -lgit2 -o main
 ~~~~
