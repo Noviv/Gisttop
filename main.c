@@ -1,9 +1,17 @@
+//x-platform headers
 #include <stdio.h>
 #include <string.h>
-#include <unistd.h>
+//sys headers
 #include <sys/types.h>
 #include <sys/stat.h>
+//io headers
+#ifdef _WIN32
+#include <io.h>
+#else
+#include <unistd.h>
+#endif
 
+//git headers
 #include "git2.h"
 
 typedef int bool;
