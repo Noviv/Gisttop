@@ -70,13 +70,22 @@ int main(int argc, char* argv[]) {
 void loop(const char* repo_path) {
 	int error;
 	git_repository* repo = NULL;
+	git_remote* remote = NULL;
+	git_diff* diff = NULL;
 
 	error = git_repository_open_ext(&repo, repo_path, GIT_REPOSITORY_OPEN_NO_SEARCH, NULL);
 
-	if (error != 0) {
-		printf("error in opening repo\n");
-		return false;
+	if (error < 0) {
+		const git_error* e = giterr_last();
+		printf("error %d\%d: %s\n", error, e->klass, e->message);
+		return;
 	}
 
+	//do loopy stuff
+	error = git_remote_lookup(&remote, repo, "origin");
+	error = git_remote_fetch(remote, NULL, NULL, NULL);
 
+	//add diff check
+
+	git_repository_free(repo);
 }
