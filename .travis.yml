@@ -13,4 +13,8 @@ install:
 - cmake ..
 - cmake --build .
 
-script: gcc -I../libgit2/include main.c -L.../libgit2/build -lgit2 -o main
+script:
+- cd ..
+- cd ..
+- cd ..
+- gcc -I./libgit2/include main.c -L./libgit2/build -lgit2 -o main
