@@ -1,3 +1,7 @@
+#ifdef __APPLE__
+#error Apple is not yet tested
+#endif
+
 //x-platform headers
 #include <stdio.h>
 #include <string.h>
@@ -20,6 +24,7 @@ typedef int bool;
 
 bool _dir_exist(const char* path) {
 #ifdef _WIN32
+//win32
 	if (_access(path, 0) == 0) {
 		struct stat status;
 		stat(path, &status);
@@ -27,17 +32,22 @@ bool _dir_exist(const char* path) {
 	}
 	return false;
 #else
+//linux
 	struct stat status;
 	stat(path, &status);
 	return S_ISDIR(status.st_mode);
 #endif
 }
 
+void loop(const char* repo_path);
+
 int main(int argc, char* argv[]) {
 	if (argc < 2) {
 		printf("need more args\n");
 		return 0;
 	}
+
+	git_libgit2_init();
 
 	printf("git repo: %s\n", argv[1]);
 
@@ -46,17 +56,27 @@ int main(int argc, char* argv[]) {
 		return 0;
 	}
 
-	char* testdir = strcat(argv[1], "/.git");
-
-	printf("newdir: %s\n", testdir);
-
-	if (_dir_exist(testdir) == false) {
+	if (git_repository_open_ext(NULL, argv[1], GIT_REPOSITORY_OPEN_NO_SEARCH, NULL) != 0) {
 		printf("is not a git repo\n");
 		return 0;
 	}
 
-	git_libgit2_init();
+	loop(argv[1]);
 
 	git_libgit2_shutdown();
 	return 0;
+}
+
+void loop(const char* repo_path) {
+	int error;
+	git_repository* repo = NULL;
+
+	error = git_repository_open_ext(&repo, repo_path, GIT_REPOSITORY_OPEN_NO_SEARCH, NULL);
+
+	if (error != 0) {
+		printf("error in opening repo\n");
+		return false;
+	}
+
+
 }
