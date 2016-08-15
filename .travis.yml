@@ -17,4 +17,5 @@ script:
 - cd ..
 - cd ..
 - cd ..
+- ls -l
 - gcc -I./libgit2/include main.c -L./libgit2/build -lgit2 -o main
