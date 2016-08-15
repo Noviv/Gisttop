@@ -1,9 +1,5 @@
 language: c
 
-branches:
- only:
-  - build
-
 addons:
  apt:
   packages:
