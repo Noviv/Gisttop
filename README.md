@@ -1,12 +1,6 @@
 # Gisttop
 desktop application that sends notifications when git repos are updated
 
-# Build Status
-| OS | Status | Time |
-| ------------- |:-------------:|:-----:|
-| Windows | success | latest commit |
-| Linux | success | latest commit |
-
 # X-platform Building
 ## Windows
 ~~~~
