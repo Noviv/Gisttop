@@ -6,7 +6,7 @@ Gisttop only tests build on the *build* branch.
 
 OS | *master*
 :---:|:---:
-Windows | (no build system)
+Windows | [![Build status](https://ci.appveyor.com/api/projects/status/0ogt6aq5h0hsibwx?svg=true)](https://ci.appveyor.com/project/Noviv/gisttop)
 Linux | [![Build Status](https://travis-ci.org/Noviv/Gisttop.svg?branch=master)](https://travis-ci.org/Noviv/Gisttop)
 
 # X-platform Building
