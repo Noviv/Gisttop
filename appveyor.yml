@@ -4,6 +4,8 @@ install:
  - "mkdir build && cd build"
  - "cmake -DBUILD_CLAR=OFF .."
  - "cmake --build ."
+ - "cd .. && cd .. && cd scripts"
+ - "build_windows.bat"
 
 build: off
 
