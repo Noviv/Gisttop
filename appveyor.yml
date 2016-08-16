@@ -1,6 +1,2 @@
-init:
+build:
  - "dir"
-
-install: off
-
-build: off
