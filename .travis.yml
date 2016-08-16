@@ -1,7 +1,5 @@
 language: c
    
-before_install: git clone https://github.com/libgit2/libgit2.git
-
 install:
 - cd libgit2
 - mkdir build && cd build
@@ -11,4 +9,5 @@ install:
 script:
 - cd ..
 - cd ..
-- gcc -I./libgit2/include main.c -L./libgit2/build -lgit2 -o main
+- cd build_scripts
+- ./linux.sh
