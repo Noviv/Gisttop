@@ -77,7 +77,7 @@ void loop(const char* repo_path) {
 
 	if (error < 0) {
 		const git_error* e = giterr_last();
-		printf("error %d\%d: %s\n", error, e->klass, e->message);
+		printf("error %d/%d: %s\n", error, e->klass, e->message);
 		return;
 	}
 
