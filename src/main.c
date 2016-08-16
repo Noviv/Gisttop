@@ -5,6 +5,7 @@
 //x-platform headers
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 //sys headers
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -15,7 +16,7 @@
 #include <unistd.h>
 #endif
 
-//git headers
+//non-system headers
 #include "git2.h"
 
 typedef int bool;
@@ -49,19 +50,23 @@ int main(int argc, char* argv[]) {
 
 	git_libgit2_init();
 
-	printf("git repo: %s\n", argv[1]);
+	char abs_path[100];
 
-	if (_dir_exist(argv[1]) == false) {
+	realpath(argv[1], abs_path);
+
+	printf("git repo: %s\n", abs_path);
+
+	if (_dir_exist(abs_path) == false) {
 		printf("does not exist\n");
 		return 0;
 	}
 
-	if (git_repository_open_ext(NULL, argv[1], GIT_REPOSITORY_OPEN_NO_SEARCH, NULL) != 0) {
+	if (git_repository_open_ext(NULL, abs_path, GIT_REPOSITORY_OPEN_NO_SEARCH, NULL) != 0) {
 		printf("is not a git repo\n");
 		return 0;
 	}
 
-	loop(argv[1]);
+	loop(abs_path);
 
 	git_libgit2_shutdown();
 	return 0;

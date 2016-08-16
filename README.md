@@ -1,4 +1,4 @@
-'# Gisttop
+# Gisttop
 desktop application that sends notifications when git repos are updated
 
 # Build Status
@@ -14,7 +14,7 @@ Linux | [![Build Status](https://travis-ci.org/Noviv/Gisttop.svg?branch=master)]
 ~~~~
 cl main.c /I.../libgit2/include /link .../libgit2/build/Debug/git2.lib /OUT:main.exe
 ~~~~
-## Linux
+## Linux (from the *scripts* directory)
 ~~~~
-gcc -I.../libgit2/include main.c -L.../libgit2/build -lgit2 -o main
+./build_linux.sh
 ~~~~

@@ -12,5 +12,5 @@ install:
 script:
 - cd ..
 - cd ..
-- cd build_scripts
-- ./linux.sh
+- cd scripts
+- ./build_linux.sh
