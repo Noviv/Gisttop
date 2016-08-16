@@ -1,16 +1,11 @@
 language: c
-
-addons:
- apt:
-  packages:
-   -cmake
    
 before_install: git clone https://github.com/libgit2/libgit2.git
 
 install:
 - cd libgit2
 - mkdir build && cd build
-- cmake ..
+- cmake -DBUILD_CLAR=OFF ..
 - cmake --build .
 
 script:
