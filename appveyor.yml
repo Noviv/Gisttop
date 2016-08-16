@@ -1,9 +1,6 @@
 init:
- - "cd libgit2"
- - "mkdir build && cd build"
+ - "dir"
 
-install:
- - "cmake -DBUILD_CLAR=OFF .."
- - "cmake --build ."
+install: off
 
 build: off
