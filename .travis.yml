@@ -1,4 +1,7 @@
 language: c
+
+notifications:
+ email: false
    
 install:
 - cd libgit2
