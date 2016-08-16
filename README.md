@@ -1,13 +1,13 @@
-# Gisttop
+'# Gisttop
 desktop application that sends notifications when git repos are updated
 
 # Build Status
 Gisttop only tests build on the *build* branch.
 
-OS | *master* | *build*
-:---:|:---:|:---:
-Windows | (no build system) | (no build system)
-Linux | [![Build Status](https://travis-ci.org/Noviv/Gisttop.svg?branch=master)](https://travis-ci.org/Noviv/Gisttop) | [![Build Status](https://travis-ci.org/Noviv/Gisttop.svg?branch=build)](https://travis-ci.org/Noviv/Gisttop)
+OS | *master*
+:---:|:---:
+Windows | (no build system)
+Linux | [![Build Status](https://travis-ci.org/Noviv/Gisttop.svg?branch=master)](https://travis-ci.org/Noviv/Gisttop)
 
 # X-platform Building
 ## Windows
