@@ -12,7 +12,7 @@ Linux | [![Build Status](https://travis-ci.org/Noviv/Gisttop.svg?branch=master)]
 # X-platform Building
 ## Windows
 ~~~~
-cl main.c /I.../libgit2/include /link .../libgit2/build/Debug/git2.lib /OUT:main.exe
+build_windows.bat
 ~~~~
 ## Linux (from the *scripts* directory)
 ~~~~
