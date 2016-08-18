@@ -13,4 +13,4 @@ script:
 - cd ..
 - cd ..
 - cd scripts
-- ./build_linux.sh
+- ./linux_build.sh

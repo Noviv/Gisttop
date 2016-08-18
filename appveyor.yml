@@ -7,7 +7,7 @@ install:
  - "cmake -DBUILD_CLAR=OFF .."
  - "cmake --build ."
  - "cd .. && cd .. && cd scripts"
- - "build_windows.bat"
+ - "windows_build.bat"
 
 build: off
 
