@@ -2,7 +2,23 @@ language: c
 
 notifications:
  email: false
-   
+ 
+env:
+ global:
+  # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+  #   via the "travis encrypt" command using the project repo's public key
+  - secure: "U1cVbErr9Z3TUGqeCcdzbwEfmmL7AGGNPQqeSQk9YTfr5V/sdYJcCCIzMMfb8+2yImPT90HFSgVH6yynYI4mTWoHP8WYL13Mze52TFb+NPOdmYcaLve74cTKLNdYqVShdoFR5OcSSATptaZQpNVC2XZgPgTq6x8M0FEkTmqVrzkOmBGxiY8/+aU0ulbtVArR3vSONHoNeH37oRHnLxKQgY/rDTzXgGH4W316JRXMPBwkhgJ+NMB8ttoWPkwhD+pbTU3bvZ73xrQf5mq0IWZg7rk+/2hw7FqEAO0/bm1NPRZ0lJ6CSbd+YXoaUlhB+2iH0l9lEJIAFVugneGsNBfPpirm5TkEvPJ7PX+FMV92wxAJ677JRe7OIcCQriofgLY/Lyb1OkBaLuDMwm2lPfQgCOGaY92O1EA9wV6gzmm31STuW+zofztPA4bK3Y/zSRrDtts+1/0Jbkb4/C38i/Gyl+7f2PZk9EtmgXnUGrtKr4b6P6Y6QSp9T5s6AI0FneQT4N7mJK76fHGciadjMykMXKZx7U2s2WKxavOlqNG+H5j0NTcgLpaaL9dKu4yIyOu032SMZeq19DmozGIeed6JQlpICSjSBKGvgPsgCYx1cmqerfyv1HsMWu4DOrQTs8ANnw/fCD0YTqjIKc02M4AA35nJFhprlb6OujCKn4JYtlk="
+
+addons:
+  coverity_scan:
+   project:
+    name: "Noviv/Gisttop"
+    description: "desktop application that sends notifications when git repos are updated"
+   notification_email: mwebbmwebb@gmail.com
+   build_command_prepend: "cd libgit2 && mkdir build && cd build && cmake -DBUILD_CLAR=OFF .. && cmake --build ."
+   build_command: "cd .. && cd .. && cd scripts && ./build_linux.sh"
+   branch_pattern: coverity_scan
+
 install:
 - cd libgit2
 - mkdir build && cd build
