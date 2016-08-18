@@ -1,2 +1,3 @@
 - [ ] - add basic functionality for checking when git repo is updated (using libgit2)
 - [ ] - add seperate build support without libgit2
+- [ ] - finish X-platform functionality
