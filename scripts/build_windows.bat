@@ -1,4 +1,3 @@
-@echo off
 if exist E:\Program Files (x86)\Visual Studio\VC\vcvarsall.bat (
 	call "E:\Program Files (x86)\Visual Studio\VC\vcvarsall.bat"
     goto FOUND
@@ -33,10 +32,10 @@ if exist E:\Program Files (x86)\Visual Studio\VC\vcvarsall.bat (
 )
 
 :FOUND
-cl ../src/main.c /I../libgit2/include /link ../libgit2/build/Debug/git2.lib /OUT:..\build\main.exe
-copy "..\libgit2\build\Debug\git2.dll" "..\build\git2.dll"
+cl ../src/main.c /I../libgit2/include /link ../libgit2/build/Debug/git2.lib /OUT:..\main.exe
+copy "..\libgit2\build\Debug\git2.dll" "..\git2.dll"
 
-if not exist ..\build\main.exe (
+if not exist ..\main.exe (
 	echo BUILD ERROR
 	thisbuildfailed
 )
