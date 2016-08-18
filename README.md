@@ -1,4 +1,4 @@
-# Gisttop
+# Gisttop [![Coverity status](https://scan.coverity.com/projects/9913/badge.svg)](https://scan.coverity.com/projects/noviv-gisttop)
 desktop application that sends notifications when git repos are updated
 
 # Build Status
