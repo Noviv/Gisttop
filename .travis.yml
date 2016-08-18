@@ -15,7 +15,7 @@ addons:
     name: "Noviv/Gisttop"
     description: "desktop application that sends notifications when git repos are updated"
    notification_email: mwebbmwebb@gmail.com
-   build_command_prepend: "cd libgit2 && mkdir build && cd build && cmake -DBUILD_CLAR=OFF .. && cmake --build ."
+   build_command_prepend: "cmake -DBUILD_CLAR=OFF .. && cmake --build ."
    build_command: "cd .. && cd .. && cd scripts && ./build_linux.sh"
    branch_pattern: coverity_scan
 
