@@ -50,8 +50,6 @@ int main(int argc, char* argv[]) {
 
 	git_libgit2_init();
 
-	//realpath(argv[1], abs_path);
-
 	printf("git repo: %s\n", argv[1]);
 
 	if (_dir_exist(argv[1]) == false) {
