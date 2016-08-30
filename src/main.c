@@ -72,7 +72,6 @@ void loop(const char* repo_path) {
 	int error;
 	git_repository* repo = NULL;
 	git_remote* remote = NULL;
-	git_diff* diff = NULL;
 
 	error = git_repository_open_ext(&repo, repo_path, GIT_REPOSITORY_OPEN_NO_SEARCH, NULL);
 
@@ -86,7 +85,7 @@ void loop(const char* repo_path) {
 	error = git_remote_lookup(&remote, repo, "origin");
 	error = git_remote_fetch(remote, NULL, NULL, NULL);
 
-	//add diff check
+	//check stuff
 
 	git_repository_free(repo);
 }
