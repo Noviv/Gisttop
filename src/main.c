@@ -1,4 +1,4 @@
-1#ifdef __APPLE__
+#ifdef __APPLE__
 #error Apple is not yet tested
 #endif
 
