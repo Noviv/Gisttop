@@ -45,25 +45,26 @@ void loop(const char* repo_path);
 int main(int argc, char* argv[]) {
 	if (argc < 2) {
 		printf("usage: main [-n] <git directory>\n");
+		printf("\t [-n] forces Gisttop to use system Git calls instead of LibGit2\n");
 		printf("\t <git directory> path to monitored git directory\n");
 		return 0;
 	}
 
 	git_libgit2_init();
 
-	printf("git repo: %s\n", argv[1]);
+	printf("git repo: %s\n", argv[argc - 1]);
 
-	if (_dir_exist(argv[1]) == false) {
+	if (_dir_exist(argv[argc - 1]) == false) {
 		printf("does not exist\n");
 		return 0;
 	}
 
-	if (git_repository_open_ext(NULL, argv[1], GIT_REPOSITORY_OPEN_NO_SEARCH, NULL) != 0) {
+	if (git_repository_open_ext(NULL, argv[argc - 1], GIT_REPOSITORY_OPEN_NO_SEARCH, NULL) != 0) {
 		printf("is not a git repo\n");
 		return 0;
 	}
 
-	loop(argv[1]);
+	loop(argv[argc - 1]);
 
 	git_libgit2_shutdown();
 	return 0;
