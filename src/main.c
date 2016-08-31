@@ -44,7 +44,8 @@ void loop(const char* repo_path);
 
 int main(int argc, char* argv[]) {
 	if (argc < 2) {
-		printf("need more args\n");
+		printf("usage: main [-n] <git directory>\n");
+		printf("\t <git directory> path to monitored git directory\n");
 		return 0;
 	}
 
