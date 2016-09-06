@@ -1,3 +1,5 @@
+#define USING_LIBGIT2
+
 #ifdef __APPLE__
 #error Apple is not yet tested
 #endif
@@ -22,8 +24,6 @@
 typedef int bool;
 #define true 1
 #define false 0
-
-static bool USING_LIBGIT2;
 
 bool _dir_exist(const char* path) {
 #ifdef _WIN32
@@ -54,15 +54,11 @@ int main(int argc, char* argv[]) {
 
 	if (argc > 2 && strcmp(argv[1], "-n") == 0) {
 		printf("Starting Gisttop with system calls...\n");
-		USING_LIBGIT2 = false;
 	} else {
 		printf("Starting Gisttop with LibGit2 calls...\n");
-		USING_LIBGIT2 = true;
 	}
 
-	if (USING_LIBGIT2) {
-		git_libgit2_init();
-	}
+	git_libgit2_init();
 
 	printf("git repo: %s\n", argv[argc - 1]);
 
@@ -71,24 +67,14 @@ int main(int argc, char* argv[]) {
 		return 0;
 	}
 
-	if (USING_LIBGIT2) {
-		if (git_repository_open_ext(NULL, argv[argc - 1], GIT_REPOSITORY_OPEN_NO_SEARCH, NULL) != 0) {
-			printf("is not a git repo\n");
-			return 0;
-		}
-	} else {
-		//TODO
+	if (git_repository_open_ext(NULL, argv[argc - 1], GIT_REPOSITORY_OPEN_NO_SEARCH, NULL) != 0) {
+		printf("is not a git repo\n");
+		return 0;
 	}
 
-	if (USING_LIBGIT2) {
-		loop(argv[argc - 1]);
-	} else {
-		//TODO
-	}
+	loop(argv[argc - 1]);
 
-	if (USING_LIBGIT2) {
-		git_libgit2_shutdown();
-	}
+	git_libgit2_shutdown();
 
 	return 0;
 }
