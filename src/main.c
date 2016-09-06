@@ -19,7 +19,9 @@
 #endif
 
 //non-system headers
+#ifdef USING_LIBGIT2
 #include "git2.h"
+#endif
 
 typedef int bool;
 #define true 1
@@ -47,16 +49,10 @@ void loop(const char* repo_path);
 int main(int argc, char* argv[]) {
 	if (argc < 2) {
 		printf("usage: main [-n] <git directory>\n");
-		printf("\t [-n] forces Gisttop to use system Git calls instead of LibGit2\n");
 		printf("\t <git directory> path to monitored git directory\n");
 		return 0;
 	}
-
-	if (argc > 2 && strcmp(argv[1], "-n") == 0) {
-		printf("Starting Gisttop with system calls...\n");
-	} else {
-		printf("Starting Gisttop with LibGit2 calls...\n");
-	}
+#ifdef USING_LIBGIT2
 
 	git_libgit2_init();
 
@@ -75,10 +71,12 @@ int main(int argc, char* argv[]) {
 	loop(argv[argc - 1]);
 
 	git_libgit2_shutdown();
+#endif
 
 	return 0;
 }
 
+#ifdef USING_LIBGIT2
 void loop(const char* repo_path) {
 	int error;
 	git_repository* repo = NULL;
@@ -100,3 +98,4 @@ void loop(const char* repo_path) {
 
 	git_repository_free(repo);
 }
+#endif
