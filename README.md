@@ -11,9 +11,9 @@ Windows | Linux | Mac
 Scripts must be executed from the scripts directory in order to work properly
 ## Windows
 ~~~~
-build_windows.bat
+windows_build.bat
 ~~~~
 ## Linux
 ~~~~
-./build_linux.sh
+./linux_build.sh
 ~~~~
