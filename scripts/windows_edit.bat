@@ -1,1 +1,0 @@
-start notepad++ ../src/main.c

@@ -27,11 +27,19 @@ typedef int bool;
 #define true 1
 #define false 0
 
+// UTILITY FUNCTIONS
 //check if a directory exists
 bool _dir_exist(const char* path);
 
+// PROGRAM FLOW FUNCTIONS
+//init Gisttop and Libgit2 (if necessary)
+void init();
+
 //start notification loop
 void loop(const char* repo_path);
+
+//shutdown Gisttop and Libgit2 (if necessary)
+void shutdown();
 
 int main(int argc, char* argv[]) {
 	if (argc < 2) {
@@ -39,6 +47,8 @@ int main(int argc, char* argv[]) {
 		printf("\t <git directory> path to monitored git directory\n");
 		return 0;
 	}
+
+	init();
 
 #ifdef USING_LIBGIT2
 	git_libgit2_init();
@@ -72,6 +82,27 @@ int main(int argc, char* argv[]) {
 	return 0;
 }
 
+bool _dir_exist(const char* path) {
+#ifdef _WIN32
+//win32
+	if (_access(path, 0) == 0) {
+		struct stat status;
+		stat(path, &status);
+		return (status.st_mode & S_IFDIR) != 0;
+	}
+	return false;
+#else
+//linux
+	struct stat status;
+	stat(path, &status);
+	return S_ISDIR(status.st_mode);
+#endif
+}
+
+void init() {
+
+}
+
 void loop(const char* repo_path) {
 #ifdef USING_LIBGIT2
 	int error;
@@ -96,19 +127,6 @@ void loop(const char* repo_path) {
 #endif
 }
 
-bool _dir_exist(const char* path) {
-#ifdef _WIN32
-//win32
-	if (_access(path, 0) == 0) {
-		struct stat status;
-		stat(path, &status);
-		return (status.st_mode & S_IFDIR) != 0;
-	}
-	return false;
-#else
-//linux
-	struct stat status;
-	stat(path, &status);
-	return S_ISDIR(status.st_mode);
-#endif
+void shutdown() {
+
 }
