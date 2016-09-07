@@ -27,23 +27,10 @@ typedef int bool;
 #define true 1
 #define false 0
 
-bool _dir_exist(const char* path) {
-#ifdef _WIN32
-//win32
-	if (_access(path, 0) == 0) {
-		struct stat status;
-		stat(path, &status);
-		return (status.st_mode & S_IFDIR) != 0;
-	}
-	return false;
-#else
-//linux
-	struct stat status;
-	stat(path, &status);
-	return S_ISDIR(status.st_mode);
-#endif
-}
+//check if a directory exists
+bool _dir_exist(const char* path);
 
+//start notification loop
 void loop(const char* repo_path);
 
 int main(int argc, char* argv[]) {
@@ -52,9 +39,10 @@ int main(int argc, char* argv[]) {
 		printf("\t <git directory> path to monitored git directory\n");
 		return 0;
 	}
-#ifdef USING_LIBGIT2
 
+#ifdef USING_LIBGIT2
 	git_libgit2_init();
+#endif
 
 	printf("git repo: %s\n", argv[argc - 1]);
 
@@ -63,21 +51,29 @@ int main(int argc, char* argv[]) {
 		return 0;
 	}
 
+#ifdef USING_LIBGIT2
 	if (git_repository_open_ext(NULL, argv[argc - 1], GIT_REPOSITORY_OPEN_NO_SEARCH, NULL) != 0) {
+#else
+	char* checkdir = (char*) malloc(1 + strlen(argv[argc - 1]) + strlen("/.git"));
+	strcpy(checkdir, argv[argc - 1]);
+	strcat(checkdir, "/.git");
+	if (_dir_exist(checkdir) == false) {
+#endif
 		printf("is not a git repo\n");
 		return 0;
 	}
 
 	loop(argv[argc - 1]);
 
+#ifdef USING_LIBGIT2
 	git_libgit2_shutdown();
 #endif
 
 	return 0;
 }
 
-#ifdef USING_LIBGIT2
 void loop(const char* repo_path) {
+#ifdef USING_LIBGIT2
 	int error;
 	git_repository* repo = NULL;
 	git_remote* remote = NULL;
@@ -97,5 +93,22 @@ void loop(const char* repo_path) {
 	//check stuff
 
 	git_repository_free(repo);
-}
 #endif
+}
+
+bool _dir_exist(const char* path) {
+#ifdef _WIN32
+//win32
+	if (_access(path, 0) == 0) {
+		struct stat status;
+		stat(path, &status);
+		return (status.st_mode & S_IFDIR) != 0;
+	}
+	return false;
+#else
+//linux
+	struct stat status;
+	stat(path, &status);
+	return S_ISDIR(status.st_mode);
+#endif
+}
