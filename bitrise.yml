@@ -28,4 +28,6 @@ workflows:
               cd ..
               cd ..
               cd scripts
-              ./linux_build.sh
+              ./unix_build.sh
+              
+#: this script is passive, and must be uploaded to Bitrise in order for the build to change
