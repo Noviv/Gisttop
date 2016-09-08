@@ -24,3 +24,8 @@ workflows:
               mkdir build && cd build
               cmake -DBUILD_CLAR=OFF ..
               cmake --build .
+              
+              cd ..
+              cd ..
+              cd scripts
+              ./linux_build.sh
