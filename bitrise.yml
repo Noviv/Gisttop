@@ -12,22 +12,24 @@ workflows:
         run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
     - git-clone@3.3.4: {}
     - script:
-          title: Build Gisttop
-          dependencies:
-            - manager: brew
-              name: cmake
-          inputs:
-          - content: |-
-              #!/bin/bash
-              cd Gisttop
-              cd libgit2
-              mkdir build && cd build
-              cmake -DBUILD_CLAR=OFF ..
-              cmake --build .
-              
-              cd ..
-              cd ..
-              cd scripts
-              ./unix_build.sh
+        title: Build Gisttop
+        dependencies:
+        - manager: brew
+          name: cmake
+        inputs:
+        - content: |-
+            #!/bin/bash
+            cd Gisttop
+            cd libgit2
+            mkdir build && cd build
+            cmake -DBUILD_CLAR=OFF ..
+            cmake --build .
+
+            cd ..
+            cd ..
+            cd scripts
+            chmod +x unix_build.sh
+            ./unix_build.sh
+
               
 #: this script is passive, and must be uploaded to Bitrise in order for the build to change
