@@ -1,9 +1,5 @@
 #define USING_LIBGIT2
 
-#ifdef __APPLE__
-#error Apple is not yet tested
-#endif
-
 //x-platform headers
 #include <stdio.h>
 #include <string.h>
