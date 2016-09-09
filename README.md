@@ -13,7 +13,7 @@ Scripts must be executed from the scripts directory in order to work properly
 ~~~~
 windows_build.bat
 ~~~~
-## Linux
+## Unix
 ~~~~
-./linux_build.sh
+./unix_build.sh
 ~~~~
