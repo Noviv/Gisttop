@@ -7,9 +7,10 @@
 //sys headers
 #include <sys/types.h>
 #include <sys/stat.h>
-//io headers
+//platform specific headers
 #ifdef _WIN32
 #include <io.h>
+#include <windows.h>
 #else
 #include <unistd.h>
 #endif
@@ -90,6 +91,10 @@ bool _dir_exist(const char* path) {
 }
 
 void init() {
+#ifdef _WIN32
+	
+#endif
+
 #ifdef USING_LIBGIT2
 	git_libgit2_init();
 #endif
