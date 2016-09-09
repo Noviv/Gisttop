@@ -30,13 +30,13 @@ bool _dir_exist(const char* path);
 
 // PROGRAM FLOW FUNCTIONS
 //init Gisttop and Libgit2 (if necessary)
-void init();
+void gisttop_init();
 
 //start notification loop
 void loop(const char* repo_path);
 
 //shutdown Gisttop and Libgit2 (if necessary)
-void shutdown();
+void gisttop_shutdown();
 
 int main(int argc, char* argv[]) {
 	if (argc < 2) {
@@ -45,7 +45,7 @@ int main(int argc, char* argv[]) {
 		return 0;
 	}
 
-	init();
+	gisttop_init();
 
 	printf("Starting Gisttop with directory: %s\n", argv[argc - 1]);
 
@@ -68,7 +68,7 @@ int main(int argc, char* argv[]) {
 
 	loop(argv[argc - 1]);
 
-	shutdown();
+	gisttop_shutdown();
 
 	return 0;
 }
@@ -90,9 +90,8 @@ bool _dir_exist(const char* path) {
 #endif
 }
 
-void init() {
+void gisttop_init() {
 #ifdef _WIN32
-	
 #endif
 
 #ifdef USING_LIBGIT2
@@ -109,7 +108,7 @@ void loop(const char* repo_path) {
 #endif
 }
 
-void shutdown() {
+void gisttop_shutdown() {
 #ifdef USING_LIBGIT2
 	git_libgit2_shutdown();
 #endif

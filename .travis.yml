@@ -13,5 +13,4 @@ script:
 - cd ..
 - cd ..
 - cd scripts
-- chmod +x unix_build.sh
 - ./unix_build.sh
