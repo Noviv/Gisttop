@@ -28,6 +28,9 @@ typedef int bool;
 //check if a directory exists
 bool _dir_exist(const char* path);
 
+//send test notification
+void notify_t();
+
 // PROGRAM FLOW FUNCTIONS
 //init Gisttop and Libgit2 (if necessary)
 void gisttop_init();
@@ -90,10 +93,13 @@ bool _dir_exist(const char* path) {
 #endif
 }
 
-void gisttop_init() {
+void notify_t() {
 #ifdef _WIN32
+	NOTIFYICONDATA nid = {};
 #endif
+}
 
+void gisttop_init() {
 #ifdef USING_LIBGIT2
 	git_libgit2_init();
 #endif
