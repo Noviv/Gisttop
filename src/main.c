@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdarg.h>
+#include <time.h>
 //sys headers
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -29,7 +31,7 @@ typedef int bool;
 bool _dir_exist(const char* path);
 
 //send test notification
-void notify_t();
+void notify(const char* msg, ...);
 
 // PROGRAM FLOW FUNCTIONS
 //init Gisttop and Libgit2 (if necessary)
@@ -41,19 +43,33 @@ void loop(const char* repo_path);
 //shutdown Gisttop and Libgit2 (if necessary)
 void gisttop_shutdown();
 
+void loop(const char* repo_path) {
+	notify("Starting Gisttop notifications...");
+#ifdef USING_LIBGIT2
+	//TODO Libgit2 implemenentation of notification loop
+#else
+	//TODO system implementation of notification loop
+#endif
+}
+
+void gisttop_shutdown() {
+#ifdef USING_LIBGIT2
+	git_libgit2_shutdown();
+#endif
+}
+
 int main(int argc, char* argv[]) {
 	if (argc < 2) {
-		printf("usage: main <git directory>\n");
-		printf("\t <git directory> path to monitored git directory\n");
+		notify("usage: main <git directory>\n%s", "\t <git directory> path to git directory");
 		return 0;
 	}
 
 	gisttop_init();
 
-	printf("Starting Gisttop with directory: %s\n", argv[argc - 1]);
+	notify("Starting Gisttop with directory: %s", argv[argc - 1]);
 
 	if (_dir_exist(argv[argc - 1]) == false) {
-		printf("Directory does not exist!\n");
+		notify("Directory does not exist!");
 		return 0;
 	}
 
@@ -65,7 +81,7 @@ int main(int argc, char* argv[]) {
 	strcat(checkdir, "/.git");
 	if (_dir_exist(checkdir) == false) {
 #endif
-		printf("Directory is not a git repository!\n");
+		notify("Directory is not a git repository!");
 		return 0;
 	}
 
@@ -86,36 +102,35 @@ bool _dir_exist(const char* path) {
 	}
 	return false;
 #else
-//linux
+//unix
 	struct stat status;
 	stat(path, &status);
 	return S_ISDIR(status.st_mode);
 #endif
 }
 
-void notify_t() {
-#ifdef _WIN32
-	NOTIFYICONDATA nid = {};
-#endif
+time_t timer;
+char t_buffer[26];
+struct tm* tm_info;
+
+void notify(const char* msg, ...) {
+	//format input string
+	char f_msg[100];
+	va_list args;
+	va_start(args, msg);
+	vsnprintf(f_msg, sizeof(f_msg), msg, args);
+	va_end(args);
+
+	//grab timestamp
+	time(&timer);
+	tm_info = localtime(&timer);
+	strftime(t_buffer, 26, "%H:%M:%S", tm_info);
+
+	printf("[Gisttop] at %s says:\n\t%s\n", t_buffer, f_msg);
 }
 
 void gisttop_init() {
 #ifdef USING_LIBGIT2
 	git_libgit2_init();
-#endif
-}
-
-void loop(const char* repo_path) {
-	printf("Starting Gisttop notifications...\n");
-#ifdef USING_LIBGIT2
-	//TODO Libgit2 implemenentation of notification loop
-#else
-	//TODO system implementation of notification loop
-#endif
-}
-
-void gisttop_shutdown() {
-#ifdef USING_LIBGIT2
-	git_libgit2_shutdown();
 #endif
 }
