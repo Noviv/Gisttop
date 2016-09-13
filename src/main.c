@@ -43,21 +43,7 @@ void loop(const char* repo_path);
 //shutdown Gisttop and Libgit2 (if necessary)
 void gisttop_shutdown();
 
-void loop(const char* repo_path) {
-	notify("Starting Gisttop notifications...");
-#ifdef USING_LIBGIT2
-	//TODO Libgit2 implemenentation of notification loop
-#else
-	//TODO system implementation of notification loop
-#endif
-}
-
-void gisttop_shutdown() {
-#ifdef USING_LIBGIT2
-	git_libgit2_shutdown();
-#endif
-}
-
+//ENTRY POINT
 int main(int argc, char* argv[]) {
 	if (argc < 2) {
 		notify("usage: main <git directory>\n%s", "\t <git directory> path to git directory");
@@ -90,6 +76,42 @@ int main(int argc, char* argv[]) {
 	gisttop_shutdown();
 
 	return 0;
+}
+
+//FUNCTION DEFINITIONS
+void gisttop_init() {
+#ifdef USING_LIBGIT2
+	git_libgit2_init();
+#endif
+}
+
+void loop(const char* repo_path) {
+	notify("Starting Gisttop notifications...");
+#ifdef USING_LIBGIT2
+	//TODO Libgit2 implemenentation of notification loop
+#else
+	FILE* fp;
+	char path[1035];
+
+	fp = popen("cd .. && git status", "r");
+	if (fp == NULL) {
+		notify("failed to popen command");
+		return;
+	}
+
+	notify("Running command...");
+	while (fgets(path, sizeof(path) - 1, fp) != NULL) {
+		printf("%s", path);
+	}
+	printf("\n");
+	pclose(fp);
+#endif
+}
+
+void gisttop_shutdown() {
+#ifdef USING_LIBGIT2
+	git_libgit2_shutdown();
+#endif
 }
 
 bool _dir_exist(const char* path) {
@@ -127,10 +149,4 @@ void notify(const char* msg, ...) {
 	strftime(t_buffer, 26, "%H:%M:%S", tm_info);
 
 	printf("[Gisttop] at %s says:\n\t%s\n", t_buffer, f_msg);
-}
-
-void gisttop_init() {
-#ifdef USING_LIBGIT2
-	git_libgit2_init();
-#endif
 }

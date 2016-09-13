@@ -1,3 +1,6 @@
+echo - Building Gisttop...
+./unix_build.sh
+
 if [[ $1 == "-n" ]]
 then
 	echo - Skipping LD_LIBRARY_PATH definition...
