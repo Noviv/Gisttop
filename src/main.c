@@ -110,7 +110,11 @@ void loop(const char* repo_path) {
 		printf("%s", path);
 	}
 	printf("\n");
+#ifdef _WIN32
+	_pclose(fp);
+#else
 	pclose(fp);
+#endif
 #endif
 }
 
