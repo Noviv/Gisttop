@@ -13,7 +13,7 @@ workflows:
     - git-clone@3.3.4: {}
     - script:
         title: Build Gisttop
-        dependencies:
+        deps:
         - manager: brew
           name: cmake
         inputs:
