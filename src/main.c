@@ -90,16 +90,22 @@ void loop(const char* repo_path) {
 #ifdef USING_LIBGIT2
 	//TODO Libgit2 implemenentation of notification loop
 #else
+	//system impleemntation of notification loop
 	FILE* fp;
 	char path[1035];
 
+#ifdef _WIN32
+	fp = _popen("cd .. && git status", "r");
+#else
 	fp = popen("cd .. && git status", "r");
+#endif
+	notify("Running command....\n");
 	if (fp == NULL) {
 		notify("failed to popen command");
 		return;
 	}
 
-	notify("Running command...");
+	notify("Reading command..\n");
 	while (fgets(path, sizeof(path) - 1, fp) != NULL) {
 		printf("%s", path);
 	}
