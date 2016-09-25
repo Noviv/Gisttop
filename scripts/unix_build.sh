@@ -1,4 +1,4 @@
-if [[ ! -d "../libgit2/build" ]]
+if [ ! -d "../libgit2/build" ]
 then
 	echo -- Building Libgit2...
 	cd ../libgit2

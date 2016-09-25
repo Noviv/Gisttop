@@ -71,6 +71,7 @@ int main(int argc, char* argv[]) {
 		return 0;
 	}
 
+	notify("Starting Gisttop notifications...\n");
 	loop(argv[argc - 1]);
 
 	gisttop_shutdown();
@@ -86,36 +87,45 @@ void gisttop_init() {
 }
 
 void loop(const char* repo_path) {
-	notify("Starting Gisttop notifications...");
+	//pause
 #ifdef USING_LIBGIT2
 	//TODO Libgit2 implemenentation of notification loop
 #else
-	//system impleemntation of notification loop
 	FILE* fp;
-	char path[1035];
+
+	//move into repo directory
+	const char* repo_append = "cd ";
+	char* path_str = (char*) malloc(sizeof(repo_path) + sizeof(repo_append) + 1);
+	strcpy(path_str, repo_append);
+	strcat(path_str, repo_path);
+	system(path_str);
 
 #ifdef _WIN32
-	fp = _popen("cd .. && git status", "r");
+	fp = _popen("cd .. && git diff master origin/master", "r");
 #else
-	fp = popen("cd .. && git status", "r");
+	fp = popen("cd .. && git diff master origin/master", "r");
 #endif
-	notify("Running command....\n");
 	if (fp == NULL) {
 		notify("failed to popen command");
 		return;
 	}
 
-	notify("Reading command..\n");
-	while (fgets(path, sizeof(path) - 1, fp) != NULL) {
-		printf("%s", path);
+	//check if command  returned nothing
+	fseek(fp, 0, SEEK_END);
+	unsigned long len = (unsigned long) ftell(fp);
+	if (len > 0) {
+		notify("No changes!\n");
+	} else {
+		notify("Your repository was changed!\n");
 	}
-	printf("\n");
+
 #ifdef _WIN32
 	_pclose(fp);
 #else
 	pclose(fp);
 #endif
 #endif
+	loop(repo_path);
 }
 
 void gisttop_shutdown() {
