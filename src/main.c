@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <time.h>
+#include <signal.h>
 //sys headers
 #include <sys/types.h>
 #include <sys/stat.h>
