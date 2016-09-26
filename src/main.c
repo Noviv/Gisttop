@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <time.h>
-#include <signal.h>
 //sys headers
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -23,6 +22,7 @@
 #include "git2.h"
 #endif
 
+//boolean definition
 typedef int bool;
 #define true 1
 #define false 0
@@ -33,6 +33,9 @@ bool _dir_exist(const char* path);
 
 //send test notification
 void notify(const char* msg, ...);
+
+//X-platform sleep
+void gisttop_sleep(int millis);
 
 // PROGRAM FLOW FUNCTIONS
 //init Gisttop and Libgit2 (if necessary)
@@ -88,7 +91,7 @@ void gisttop_init() {
 }
 
 void loop(const char* repo_path) {
-	//pause
+	gisttop_sleep(500);
 #ifdef USING_LIBGIT2
 	//TODO Libgit2 implemenentation of notification loop
 #else
@@ -170,4 +173,16 @@ void notify(const char* msg, ...) {
 	strftime(t_buffer, 26, "%H:%M:%S", tm_info);
 
 	printf("[Gisttop] at %s says:\n\t%s\n", t_buffer, f_msg);
+}
+
+struct timespec ts;
+
+void gisttop_sleep(int millis) {
+#ifdef _WIN32
+	Sleep(millis);
+#else
+	ts.tv_sec = millis / 1000;
+	ts.tv_nsec = (millis % 1000) * 1000000;
+	nanosleep(&ts, NULL);
+#endif
 }
