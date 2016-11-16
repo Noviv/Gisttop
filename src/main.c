@@ -97,17 +97,10 @@ void loop(const char* repo_path) {
 #else
 	FILE* fp;
 
-	//move into repo directory
-	const char* repo_append = "cd ";
-	char* path_str = (char*) malloc(sizeof(repo_path) + sizeof(repo_append) + 1);
-	strcpy(path_str, repo_append);
-	strcat(path_str, repo_path);
-	system(path_str);
-
 #ifdef _WIN32
-	fp = _popen("cd .. && git diff master origin/master", "r");
+	fp = _popen("git diff master origin/master", "r");
 #else
-	fp = popen("cd .. && git diff master origin/master", "r");
+	fp = popen("git diff master origin/master", "r");
 #endif
 	if (fp == NULL) {
 		notify("failed to popen command");
