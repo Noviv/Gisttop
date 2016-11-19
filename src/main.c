@@ -107,7 +107,7 @@ void loop(const char* repo_path) {
 		return;
 	}
 
-	//check if command  returned nothing
+	//check if command returned nothing
 	fseek(fp, 0, SEEK_END);
 	unsigned long len = (unsigned long) ftell(fp);
 	if (len > 0) {
