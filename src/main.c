@@ -91,7 +91,7 @@ void gisttop_init() {
 }
 
 void loop(const char* repo_path) {
-	gisttop_sleep(500);
+	gisttop_sleep(1000);
 #ifdef USING_LIBGIT2
 	//TODO Libgit2 implemenentation of notification loop
 #else
