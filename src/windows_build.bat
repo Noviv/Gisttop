@@ -39,14 +39,14 @@ if exist "E:\Program Files (x86)\Visual Studio\VC\vcvarsall.bat" (
 
 :FOUND
 echo -- Creating clone to build with Libgit2...
-more +2 "../src/main.c" > "../src/main_nlg2.c"
+more +2 "main.c" > "main_nlg2.c"
 
 echo -- Building Gisttop with Libgit2...
-cl ../src/main.c /I../libgit2/include /link ../libgit2/build/Debug/git2.lib /out:..\main.exe
+cl main.c /I../libgit2/include /link ../libgit2/build/Debug/git2.lib /out:..\main.exe
 copy "..\libgit2\build\Debug\git2.dll" "..\git2.dll"
 
 echo -- Build Gisttop without Libgit2...
-cl ../src/main_nlg2.c /link /out:..\main_nlg2.exe
+cl main_nlg2.c /link /out:..\main_nlg2.exe
 
 if not exist ..\main.exe (
 	echo DID NOT BUILD main.exe
