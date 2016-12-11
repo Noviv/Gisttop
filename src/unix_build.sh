@@ -7,7 +7,7 @@ then
 	cmake --build .
 	cd ..
 	cd ..
-	cd scripts
+	cd src
 fi
 
 echo -- Setting up Gisttop build space...
