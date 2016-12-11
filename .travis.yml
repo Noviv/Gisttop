@@ -11,6 +11,5 @@ install:
 
 script:
 - cd ..
-- cd ..
-- cd scripts
+- cd src
 - ./unix_build.sh
