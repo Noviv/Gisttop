@@ -6,7 +6,6 @@ then
 	cmake -DBUILD_CLAR=OFF ..
 	cmake --build .
 	cd ..
-	cd ..
 	cd src
 fi
 
