@@ -10,5 +10,6 @@ install:
 - cmake --build .
 
 script:
+- cd ..
 - cd src
 - ./unix_build.sh
