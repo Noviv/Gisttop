@@ -2,8 +2,9 @@
 format_version: 1.2.0
 default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 trigger_map:
-- pattern: "*"
-  is_pull_request_allowed: true
+- push_branch: "*"
+  workflow: primary
+- pull_request_source_branch: "*"
   workflow: primary
 workflows:
   primary:
@@ -13,9 +14,6 @@ workflows:
     - git-clone@3.3.4: {}
     - script:
         title: Build Gisttop
-        deps:
-        - manager: brew
-          name: cmake
         inputs:
         - content: |-
             #!/bin/bash
@@ -27,9 +25,9 @@ workflows:
 
             cd ..
             cd ..
-            cd scripts
+            cd src
             chmod +x unix_build.sh
             ./unix_build.sh
-
-              
-#: this script is passive, and must be uploaded to Bitrise in order for the build to change
+        dependencies:
+        - manager: brew
+          name: cmake
