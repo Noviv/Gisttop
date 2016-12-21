@@ -1,3 +1,5 @@
+@echo off
+
 if exist "E:\Program Files (x86)\Visual Studio\VC\vcvarsall.bat" (
 	echo -- Running custom VS
 	call "E:\Program Files (x86)\Visual Studio\VC\vcvarsall.bat"
@@ -38,6 +40,17 @@ if exist "E:\Program Files (x86)\Visual Studio\VC\vcvarsall.bat" (
 )
 
 :FOUND
+if not exist ../libgit2/build/ (
+	echo -- Building Libgit2...
+	cd ../libgit2
+	mkdir build && cd build
+	cmake -DBUILD_CLAR=OFF ..
+	cmake --build .
+	cd ..
+	cd ..
+	cd src
+)
+
 echo -- Creating clone to build with Libgit2...
 more +2 "main.c" > "main_nlg2.c"
 
@@ -47,6 +60,10 @@ copy "..\libgit2\build\Debug\git2.dll" "..\git2.dll"
 
 echo -- Build Gisttop without Libgit2...
 cl main_nlg2.c /link /out:..\main_nlg2.exe
+
+del main.obj
+del main_nlg2.c
+del main_nlg2.obj
 
 if not exist ..\main.exe (
 	echo DID NOT BUILD main.exe
