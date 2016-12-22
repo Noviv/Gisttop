@@ -44,26 +44,28 @@ if not exist ../libgit2/build/ (
 	cd src
 )
 
+mkdir ..\build
+
 echo -- Creating clone to build with Libgit2...
 more +2 "main.c" > "main_nlg2.c"
 
 echo -- Building Gisttop with Libgit2...
-cl main.c /I../libgit2/include /link ../libgit2/build/Debug/git2.lib /out:..\main.exe
+cl main.c /I../libgit2/include /link ../libgit2/build/Debug/git2.lib /out:..\build\main.exe
 copy "..\libgit2\build\Debug\git2.dll" "..\git2.dll"
 
 echo -- Build Gisttop without Libgit2...
-cl main_nlg2.c /link /out:..\main_nlg2.exe
+cl main_nlg2.c /link /out:..\build\main_nlg2.exe
 
 del main.obj
 del main_nlg2.c
 del main_nlg2.obj
 
-if not exist ..\main.exe (
+if not exist ..\build\main.exe (
 	echo DID NOT BUILD main.exe
 	thisbuildfailed
 )
 
-if not exist ..\main_nlg2.exe (
+if not exist ..\build\main_nlg2.exe (
 	echo DID NOT BUILD main_nlg2.exe
 	thisbuildfailed
 )
