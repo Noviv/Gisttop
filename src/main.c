@@ -113,6 +113,12 @@ void loop(const char* repo_path) {
 	if (len > 0) {
 		notify("No changes!\n");
 	} else {
+#ifdef _WIN32
+		//TODO: implement Windows notification system
+#else
+		system("notify-send Gisttop: Your repository was changed!\n");
+#endif
+
 		notify("Your repository was changed!\n");
 	}
 
